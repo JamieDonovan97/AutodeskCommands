@@ -7,4 +7,19 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="accoremgd">
+        <HintPath>..\..\..\..\..\Program Files\Autodesk\AutoCAD 2025\accoremgd.dll</HintPath>
+      </Reference>
+      <Reference Include="Acdbmgd">
+        <HintPath>..\..\..\..\..\Program Files\Autodesk\AutoCAD 2025\acdbmgd.dll</HintPath>
+      </Reference>
+      <Reference Include="Acmgd">
+        <HintPath>..\..\..\..\..\Program Files\Autodesk\AutoCAD 2025\acmgd.dll</HintPath>
+      </Reference>
+      <Reference Include="AeccDbMgd">
+        <HintPath>..\..\..\..\..\Program Files\Autodesk\AutoCAD 2025\C3D\AeccDbMgd.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
