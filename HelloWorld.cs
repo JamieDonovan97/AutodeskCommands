@@ -2,6 +2,7 @@ using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.ApplicationServices.Core;
 using System;
 using System.Linq;
+using System.Reflection.Metadata;
 
 
 namespace AutodeskCommands
