@@ -1,4 +1,6 @@
-using System.Windows.Controls;
+// Copyright (c) Jamie B Donovan. All rights reserved.
+// Licensed under the MIT License. See License in the project root for license information.
+
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.EditorInput;
@@ -10,11 +12,6 @@ namespace AutodeskCommands;
 /// A simple C# Plugin for AutoCAD that displays "HelloWorld" to the command line
 /// based on the "Create Your First AutoCAD Plugin" by Autodesk University
 /// </summary>
-///
-public class Test : Page
-{
-    private int x = 5;
-}
 public class Commands : IExtensionApplication
 {
     /// <summary>
@@ -40,35 +37,41 @@ public class Commands : IExtensionApplication
     /// <summary>
     /// The Hello command that displays "Hello World!" in the command line.
     /// </summary>
-    [CommandMethod("HELLOWORLD")]
-    public static void Fred()
+    [CommandMethod("HelloWorld")]
+    public static void DisplayHelloWorld()
     {
-        // Get the active document
-        var document = Application.DocumentManager.MdiActiveDocument;
-            
-        // Get the editor object
-        var editor = document.Editor;
-            
+        // Get Editor
+        var editor = GetEditor();
         // Display "Hello World!" in the command line
         editor.WriteMessage("\nHello World!");
     }
 
     /// <summary>
-    /// Helper method to get the active AutoCAD document.
+    /// Retrieves the active AutoCAD document.
     /// </summary>
     /// <returns> Returns the active AutoCAD document </returns>
     private static Document GetActiveDocument()
     {
-        return Application.DocumentManager.MdiActiveDocument;
+        Document activeDoc = Application.DocumentManager.MdiActiveDocument;
+        if (activeDoc == null)
+        {
+            throw new InvalidOperationException("Unable to retrieve the active AutoCAD document.");
+        }
+        return activeDoc;
     }
     
     /// <summary>
-    /// Helper method to get the active AutoCAD document.
+    /// Retrieves the active AutoCAD document's editor.
     /// </summary>
-    /// <returns> Returns the active AutoCAD document </returns>
+    /// <returns> Returns the active AutoCAD document's editor </returns>
     private static Editor GetEditor()
     {
-        return GetActiveDocument().Editor;
+        Editor activeEditor = GetActiveDocument().Editor;
+        if (activeEditor == null)
+        {
+            throw new InvalidOperationException("Unable to retrieve the editor for the active document.");
+        }
+        return activeEditor;
     }
 }
 
