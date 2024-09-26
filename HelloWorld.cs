@@ -10,12 +10,12 @@ namespace AutodeskCommands;
 
 /// <summary>
 /// A simple C# Plugin for AutoCAD that displays "HelloWorld" to the command line
-/// based on the "Create Your First AutoCAD Plugin" by Autodesk University
+/// using the command _HelloWorld. Also displays to command line upon initialisation and termination.
 /// </summary>
 public class Commands : IExtensionApplication
 {
     /// <summary>
-    /// Initializes the plugin.
+    /// Initialises the plugin.
     /// Runs on AutoCAD Startup
     /// </summary>
     public void Initialize()
@@ -52,7 +52,7 @@ public class Commands : IExtensionApplication
     /// <returns> Returns the active AutoCAD document </returns>
     private static Document GetActiveDocument()
     {
-        Document activeDoc = Application.DocumentManager.MdiActiveDocument;
+        var activeDoc = Application.DocumentManager.MdiActiveDocument;
         if (activeDoc == null)
         {
             throw new InvalidOperationException("Unable to retrieve the active AutoCAD document.");
@@ -66,7 +66,7 @@ public class Commands : IExtensionApplication
     /// <returns> Returns the active AutoCAD document's editor </returns>
     private static Editor GetEditor()
     {
-        Editor activeEditor = GetActiveDocument().Editor;
+        var activeEditor = GetActiveDocument().Editor;
         if (activeEditor == null)
         {
             throw new InvalidOperationException("Unable to retrieve the editor for the active document.");
