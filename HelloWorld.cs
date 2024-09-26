@@ -1,13 +1,20 @@
+using System.Windows.Controls;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.EditorInput;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace AutodeskCommands;
-    /// <summary>
-    /// A simple C# Plugin for AutoCAD that displays "HelloWorld" to the command line
-    /// based on the "Create Your First AutoCAD Plugin" by Autodesk University
-    /// </summary>
+
+/// <summary>
+/// A simple C# Plugin for AutoCAD that displays "HelloWorld" to the command line
+/// based on the "Create Your First AutoCAD Plugin" by Autodesk University
+/// </summary>
+///
+public class Test : Page
+{
+    private int x = 5;
+}
 public class Commands : IExtensionApplication
 {
     /// <summary>
@@ -26,14 +33,15 @@ public class Commands : IExtensionApplication
     /// </summary>
     public void Terminate()
     {
-        Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\nPlugin terminated.");
+        var editor = GetEditor();
+        editor.WriteMessage("\nPlugin terminated.");
     }
     
     /// <summary>
     /// The Hello command that displays "Hello World!" in the command line.
     /// </summary>
-    [CommandMethod("HelloWorld")]
-    public void HelloWorld()
+    [CommandMethod("HELLOWORLD")]
+    public static void Fred()
     {
         // Get the active document
         var document = Application.DocumentManager.MdiActiveDocument;
@@ -49,7 +57,7 @@ public class Commands : IExtensionApplication
     /// Helper method to get the active AutoCAD document.
     /// </summary>
     /// <returns> Returns the active AutoCAD document </returns>
-    private Document GetActiveDocument()
+    private static Document GetActiveDocument()
     {
         return Application.DocumentManager.MdiActiveDocument;
     }
@@ -58,7 +66,7 @@ public class Commands : IExtensionApplication
     /// Helper method to get the active AutoCAD document.
     /// </summary>
     /// <returns> Returns the active AutoCAD document </returns>
-    private Editor GetEditor()
+    private static Editor GetEditor()
     {
         return GetActiveDocument().Editor;
     }
