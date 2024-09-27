@@ -10,42 +10,39 @@ namespace AutodeskCommands;
 
 /// <summary>
 /// A simple C# Plugin for AutoCAD that displays "HelloWorld" to the command line
-/// using the command _HelloWorld. Also displays to command line upon initialisation and termination.
+/// using the command HelloWorld. Also displays to command line upon initialisation and termination.
 /// </summary>
-public class Commands : IExtensionApplication
+public partial class Commands : IExtensionApplication
 {
     /// <summary>
     /// Initialises the plugin.
-    /// Runs on AutoCAD Startup
+    /// Runs on AutoCAD Startup.
     /// </summary>
     public void Initialize()
     {
         var editor = GetEditor();
         editor.WriteMessage("\nPlugin Loaded Successfully.");
         
-        // Subscribe to the DocumentActivated event
+        // Subscribe to the document events.
         Application.DocumentManager.DocumentCreated += OnDocumentOpened;
-
         Application.DocumentManager.DocumentToBeDestroyed += OnDocumentClosed;
     }
     
     /// <summary>
-    /// Terminates the plugin.
-    /// Unload Resources
+    /// Terminates the plugin, Unloads Resources and unsubscribes from events.
     /// </summary>
     public void Terminate()
     {
-        // Unsubscribe from the 
+        // Unsubscribe from events 
         Application.DocumentManager.DocumentCreated -= OnDocumentOpened;
         Application.DocumentManager.DocumentToBeDestroyed -= OnDocumentClosed;
-        
-        // Get Editor
-        var editor = GetEditor();
-        // Display "Hello World!" in the command line
-        editor.WriteMessage("\nPlugin terminated.");
-        
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private static void OnDocumentOpened(object sender, DocumentCollectionEventArgs e)
     {
         var editor = e.Document.Editor;
@@ -55,7 +52,12 @@ public class Commands : IExtensionApplication
         SetVariables(editor);
     }
     
-    private void OnDocumentClosed(object sender, DocumentCollectionEventArgs e)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private static void OnDocumentClosed(object sender, DocumentCollectionEventArgs e)
     {
         var editor = e.Document.Editor;
         editor.WriteMessage($"\nDocument '{e.Document.Name}' is closing.");
@@ -76,11 +78,10 @@ public class Commands : IExtensionApplication
 
         // Set more variables or execute commands as needed
     }
-
-    
     
     /// <summary>
-    /// The Hello command that displays "Hello World!" in the command line.
+    /// AutoCAD Commandline command HELLOWORLD.
+    /// displays "Hello World!" in the command line.
     /// </summary>
     [CommandMethod("HelloWorld")]
     public static void DisplayHelloWorld()
@@ -89,34 +90,6 @@ public class Commands : IExtensionApplication
         var editor = GetEditor();
         // Display "Hello World!" in the command line
         editor.WriteMessage("\nHello World!");
-    }
-
-    /// <summary>
-    /// Retrieves the active AutoCAD document.
-    /// </summary>
-    /// <returns> Returns the active AutoCAD document </returns>
-    private static Document GetActiveDocument()
-    {
-        var activeDoc = Application.DocumentManager.MdiActiveDocument;
-        if (activeDoc == null)
-        {
-            throw new InvalidOperationException("Unable to retrieve the active AutoCAD document.");
-        }
-        return activeDoc;
-    }
-    
-    /// <summary>
-    /// Retrieves the active AutoCAD document's editor.
-    /// </summary>
-    /// <returns> Returns the active AutoCAD document's editor </returns>
-    private static Editor GetEditor()
-    {
-        var activeEditor = GetActiveDocument().Editor;
-        if (activeEditor == null)
-        {
-            throw new InvalidOperationException("Unable to retrieve the editor for the active document.");
-        }
-        return activeEditor;
     }
 }
 
